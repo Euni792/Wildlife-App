@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wildlife Crime Reporter</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="home-container">
+    <h1>Wildlife Crime Reporting</h1>
+    <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d" alt="Wildlife" class="wildlife-image">
+    <button onclick="showForm()">Report an Incident</button>
+  </div>
+
+  <div class="container" id="reportForm">
+    <h2>Report Wildlife Crime</h2>
+    <form id="crimeForm" enctype="multipart/form-data">
+      <label for="date">Date of Incident</label>
+      <input type="date" id="date" name="date" required />
+
+      <label for="time">Time of Incident</label>
+      <input type="time" id="time" name="time" required />
+
+      <label for="location">Location (Lat, Long)</label>
+      <input type="text" id="location" name="location" placeholder="Click to autofill" readonly />
+      <button type="button" onclick="getLocation()">Get Location</button>
+
+      <label for="image">Upload Photo</label>
+      <input type="file" id="image" name="image" accept="image/*" required />
+
+      <label for="description">Incident Description</label>
+      <textarea id="description" name="description" rows="5" required></textarea>
+
+      <button type="submit">Submit Report</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
