@@ -1,42 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wildlife Crime Reporter</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Wildlife Crime Reporter</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .home-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 30px;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .home-container h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        .wildlife-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .home-container button {
+            background-color: #5cb85c;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .home-container button:hover {
+            background-color: #4cae4c;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 700px;
+            margin-bottom: 30px;
+            display: none; /* Hidden by default */
+        }
+
+        .container h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2em;
+        }
+
+        .container label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .container input[type="date"],
+        .container input[type="time"],
+        .container input[type="text"],
+        .container input[type="file"],
+        .container textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+
+        .container textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .container button[type="button"],
+        .container button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .container button[type="button"]:hover,
+        .container button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .container button[type="button"] {
+            background-color: #6c757d;
+            margin-right: 10px;
+        }
+
+        .container button[type="button"]:hover {
+            background-color: #5a6268;
+        }
+    </style>
+    <script>
+        function showForm() {
+            document.getElementById('reportForm').style.display = 'block';
+            document.querySelector('.home-container').style.display = 'none';
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById('location').value = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            document.getElementById('location').value = position.coords.latitude + ", " + position.coords.longitude;
+        }
+
+        function showError(error) {
+            let message;
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    message = "User denied the request for Geolocation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    message = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    message = "The request to get user location timed out.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    message = "An unknown error occurred.";
+                    break;
+            }
+            document.getElementById('location').value = "Error: " + message;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const crimeForm = document.getElementById('crimeForm');
+            if (crimeForm) {
+                crimeForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const formData = new FormData(this);
+                    // For demonstration, we'll just log the data
+                    for (const [key, value] of formData.entries()) {
+                        console.log(`${key}: ${value}`);
+                    }
+                    alert('Report submitted successfully!');
+                    document.getElementById('reportForm').style.display = 'none';
+                    document.querySelector('.home-container').style.display = 'flex'; // Show home container again
+                    crimeForm.reset();
+                });
+            }
+        });
+    </script>
 </head>
 <body>
 
-  <div class="home-container">
-    <h1>Wildlife Crime Reporting</h1>
-    <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d" alt="Wildlife" class="wildlife-image">
-    <button onclick="showForm()">Report an Incident</button>
-  </div>
+    <div class="home-container">
+        <h1>Wildlife Crime Reporting</h1>
+        <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d" alt="Wildlife" class="wildlife-image">
+        <button onclick="showForm()">Report an Incident</button>
+    </div>
 
-  <div class="container" id="reportForm">
-    <h2>Report Wildlife Crime</h2>
-    <form id="crimeForm" enctype="multipart/form-data">
-      <label for="date">Date of Incident</label>
-      <input type="date" id="date" name="date" required />
+    <div class="container" id="reportForm">
+        <h2>Report Wildlife Crime</h2>
+        <form id="crimeForm" enctype="multipart/form-data">
+            <label for="date">Date of Incident</label>
+            <input type="date" id="date" name="date" required />
 
-      <label for="time">Time of Incident</label>
-      <input type="time" id="time" name="time" required />
+            <label for="time">Time of Incident</label>
+            <input type="time" id="time" name="time" required />
 
-      <label for="location">Location (Lat, Long)</label>
-      <input type="text" id="location" name="location" placeholder="Click to autofill" readonly />
-      <button type="button" onclick="getLocation()">Get Location</button>
+            <label for="location">Location (Latitude, Longitude)</label>
+            <input type="text" id="location" name="location" placeholder="Click 'Get Location'" readonly />
+            <button type="button" onclick="getLocation()">Get Location</button>
 
-      <label for="image">Upload Photo</label>
-      <input type="file" id="image" name="image" accept="image/*" required />
+            <label for="image">Upload Photo</label>
+            <input type="file" id="image" name="image" accept="image/*" required />
 
-      <label for="description">Incident Description</label>
-      <textarea id="description" name="description" rows="5" required></textarea>
+            <label for="description">Incident Description</label>
+            <textarea id="description" name="description" rows="5" required></textarea>
 
-      <button type="submit">Submit Report</button>
-    </form>
-  </div>
+            <button type="submit">Submit Report</button>
+        </form>
+    </div>
 
-  <script src="script.js"></script>
 </body>
 </html>
